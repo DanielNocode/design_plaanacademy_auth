@@ -229,36 +229,27 @@ form.xdget-loginUserForm::after {
   text-align: center !important;
 }
 
-/* === ССЫЛКА "Регистрация": Figma — flex column, gap 2px === */
-/* Desktop: align-items flex-end, Mobile: align-items center */
+/* === ССЫЛКА "Регистрация": Desktop — inline, "Еще нет аккаунта?" слева === */
 .login-form .btn-register {
   font-family: 'Geologica', sans-serif !important;
   color: #FE9347 !important;
   font-size: 15px !important;
   font-weight: 300 !important;
-  line-height: 19px !important;
   text-decoration: none !important;
   padding: 14px 0 !important;
   border: none !important;
   background: transparent !important;
   float: right !important;
   cursor: pointer !important;
-  /* Figma: column layout — "Еще нет аккаунта?" сверху, "Регистрация" снизу */
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-  gap: 2px !important;
 }
 
-/* Figma: "Еще нет аккаунта?" — Geologica 300 12px, #9D9D9D, opacity 0.7 */
+/* Desktop: "Еще нет аккаунта?" — inline, Geologica 300 15px, #9D9D9D, opacity 0.7 */
 .login-form .btn-register::before {
-  content: 'Еще нет аккаунта?' !important;
+  content: 'Еще нет аккаунта? ' !important;
   color: #9D9D9D !important;
   font-weight: 300 !important;
-  font-size: 12px !important;
-  line-height: 15px !important;
+  font-size: 15px !important;
   opacity: 0.7 !important;
-  display: block !important;
 }
 
 /* === ПОЛЯ ВВОДА: контейнеры === */
@@ -983,11 +974,21 @@ form.xdget-loginUserForm .alert-danger {
     margin: 0 auto 0 auto !important;
   }
 
-  /* --- Registration link: Figma mobile — column, centered, gap 2px --- */
+  /* --- Registration link: Figma mobile — column, right-aligned, gap 2px --- */
+  /* «Еще нет аккаунта?» сверху (12px), «Регистрация» снизу (15px) */
   .login-form .btn-register {
-    float: none !important;
-    align-items: center !important;
-    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 2px !important;
+    float: right !important;
+  }
+
+  .login-form .btn-register::before {
+    content: 'Еще нет аккаунта?' !important;
+    font-size: 12px !important;
+    line-height: 15px !important;
+    display: block !important;
   }
 
   /* --- Inputs: Figma mobile SAME as desktop — 68px, 16px font, same padding --- */
