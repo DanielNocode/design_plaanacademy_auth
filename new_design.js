@@ -1,140 +1,218 @@
-// ===== PLAAN LOGIN — FINAL JS v7 =====
-(function() {
+// ===== PLAAN LOGIN — JS v8 (полный редизайн по спецификации README.md) =====
+(function () {
   'use strict';
 
-  var emailSVG = '<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="5" width="24" height="18" rx="4" fill="#3b5bdb" opacity="0.85"/><path d="M2 9l12 8 12-8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+  // === SVG-иконки полей (stroke-стиль из спецификации) ===
+  var emailSVG =
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+    '<rect x="2" y="4" width="20" height="16" rx="3" stroke="#3b5bdb" stroke-width="1.8"/>' +
+    '<path d="M2 7l10 7 10-7" stroke="#3b5bdb" stroke-width="1.8" stroke-linecap="round"/>' +
+    '</svg>';
 
-  var lockSVG = '<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="5" y="12" width="18" height="13" rx="3.5" fill="#3b5bdb" opacity="0.85"/><path d="M9 12V9a5 5 0 0110 0v3" stroke="#5c7cfa" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="14" cy="19" r="2" fill="#fff"/><path d="M14 21v2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+  var lockSVG =
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+    '<rect x="5" y="11" width="14" height="10" rx="2" stroke="#3b5bdb" stroke-width="1.8"/>' +
+    '<path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="#3b5bdb" stroke-width="1.8" stroke-linecap="round"/>' +
+    '</svg>';
+
+  // === CDN URLs ===
+  var LOGO_URL =
+    'https://fs.getcourse.ru/fileservice/file/download/a/677405/sc/390/h/f4a5ab9447bb5aedb5e2fc781098f3dc.png';
+  var FONT_URL =
+    'https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&display=swap';
 
   function init() {
-    // 0. Шрифты
+    // Guard: не запускать повторно если уже инициализировано
+    if (document.querySelector('.plaan-card-outer')) return;
+
+    var form = document.querySelector('form.xdget-loginUserForm');
+    if (!form) return;
+
+    // === 0. Подключаем шрифт Unbounded ===
     if (!document.getElementById('plaan-fonts')) {
       var link = document.createElement('link');
       link.id = 'plaan-fonts';
       link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap';
+      link.href = FONT_URL;
       document.head.appendChild(link);
     }
 
-    // 1. Логотип
-    var logo = document.querySelector('.gc-account-logo .logo-link img');
-    if (logo) {
-      logo.src = 'https://fs.getcourse.ru/fileservice/file/download/a/677405/sc/390/h/f4a5ab9447bb5aedb5e2fc781098f3dc.png';
-      logo.style.cssText = 'height:50px!important;width:auto!important;filter:none!important;';
+    // === 1. Заменяем URL логотипа ===
+    var logoImg = document.querySelector('.gc-account-logo .logo-link img');
+    if (logoImg) {
+      logoImg.src = LOGO_URL;
+      logoImg.style.cssText =
+        'max-width:200px!important;height:auto!important;display:block!important;margin:0 auto!important;';
     }
 
-    // 2. Обёртка для двойной рамки
-    var form = document.querySelector('form.xdget-loginUserForm');
-    if (form && !form.parentElement.classList.contains('plaan-card-outer')) {
-      var wrapper = document.createElement('div');
-      wrapper.className = 'plaan-card-outer';
-      form.parentNode.insertBefore(wrapper, form);
-      wrapper.appendChild(form);
-    }
+    // === 2. Оборачиваем форму в div.plaan-card-outer (двойная рамка) ===
+    var wrapper = document.createElement('div');
+    wrapper.className = 'plaan-card-outer';
+    form.parentNode.insertBefore(wrapper, form);
+    wrapper.appendChild(form);
 
-    // 3. SVG иконки
-    var forms = document.querySelectorAll('.login-form, .register-form');
-    forms.forEach(function(f) {
-      var fields = f.querySelectorAll('.xdget-formField');
-      fields.forEach(function(field, i) {
-        field.querySelectorAll('.plaan-field-icon').forEach(function(el) { el.remove(); });
+    // === 3. Заменяем emoji-иконки на SVG в полях ввода ===
+    var formStates = form.querySelectorAll('.login-form, .register-form');
+    formStates.forEach(function (stateForm) {
+      var fields = stateForm.querySelectorAll('.xdget-formField');
+      fields.forEach(function (field, i) {
+        // Удаляем старые иконки если есть
+        field
+          .querySelectorAll('.plaan-field-icon')
+          .forEach(function (el) {
+            el.remove();
+          });
+
+        var inputBlock = field.querySelector('.field-input-block');
+        if (!inputBlock) return;
+
         var icon = document.createElement('div');
         icon.className = 'plaan-field-icon';
-        if (i === 0) icon.innerHTML = emailSVG;
-        else if (i === 1) icon.innerHTML = lockSVG;
-        else return;
-        field.style.position = 'relative';
-        field.insertBefore(icon, field.firstChild);
+        if (i === 0) {
+          icon.innerHTML = emailSVG;
+        } else if (i === 1) {
+          icon.innerHTML = lockSVG;
+        } else {
+          return;
+        }
+        inputBlock.style.position = 'relative';
+        inputBlock.insertBefore(icon, inputBlock.firstChild);
       });
     });
 
-    // 4. Текст кнопок
-    document.querySelectorAll('.login-form .btn-success').forEach(function(btn) {
-      var t = btn.textContent.trim().replace(/\s+/g, ' ');
-      if (t === 'Войти' || t.indexOf('ВОЙТИ') !== -1) {
-        btn.innerHTML = '<span style="position:relative;z-index:2">ВОЙТИ \u00A0\u00BB</span>';
-      }
-    });
-    document.querySelectorAll('.register-form .btn-success').forEach(function(btn) {
-      var t = btn.textContent.trim().replace(/\s+/g, ' ');
-      if (t === 'Зарегистрироваться' || t.indexOf('РЕГИСТРАЦИЯ') !== -1) {
-        btn.innerHTML = '<span style="position:relative;z-index:2">РЕГИСТРАЦИЯ \u00A0\u00BB</span>';
-      }
+    // === 4a. Меняем текст кнопки "Войти" → "ВОЙТИ »" ===
+    form.querySelectorAll('.login-form .btn-success').forEach(function (btn) {
+      btn.innerHTML =
+        '<span style="position:relative;z-index:2">ВОЙТИ \u00A0\u00BB</span>';
     });
 
-    // 4b. "Забыли пароль?" — меняем текст + иконка i + перемещаем над кнопкой
-    var remindBtn = document.querySelector('.login-form .btn-remind');
-    var submitBtn = document.querySelector('.login-form .btn-success');
-    if (remindBtn && !remindBtn.querySelector('.plaan-info-icon')) {
+    // === 4a-reg. Кнопка регистрации → "РЕГИСТРАЦИЯ »" ===
+    form
+      .querySelectorAll('.register-form .btn-success')
+      .forEach(function (btn) {
+        btn.innerHTML =
+          '<span style="position:relative;z-index:2">РЕГИСТРАЦИЯ \u00A0\u00BB</span>';
+      });
+
+    // === 4b. "Восстановить пароль" → "Забыли пароль?" + иконка ⓘ ===
+    var remindBtn = form.querySelector('.login-form .btn-remind');
+    var submitBtn = form.querySelector('.login-form .btn-success');
+
+    if (remindBtn) {
       remindBtn.textContent = 'Забыли пароль?';
+
       var infoIcon = document.createElement('span');
       infoIcon.className = 'plaan-info-icon';
-      infoIcon.innerHTML = 'i';
+      infoIcon.textContent = 'i';
       remindBtn.appendChild(infoIcon);
-      infoIcon.addEventListener('click', function(e) {
+
+      // Клик на ⓘ — toggle tooltip
+      infoIcon.addEventListener('click', function (e) {
         e.stopPropagation();
         e.preventDefault();
-        var card = document.querySelector('.plaan-tooltip-card');
-        if (card) card.classList.toggle('active');
+        var tooltip = document.querySelector('.plaan-tooltip-card');
+        if (tooltip) tooltip.classList.toggle('active');
       });
     }
-    // Перемещаем перед кнопкой ВОЙТИ
-    if (remindBtn && submitBtn && submitBtn.parentNode === remindBtn.parentNode) {
-      remindBtn.parentNode.insertBefore(remindBtn, submitBtn);
+
+    // === 4c. Перемещаем btn-remind ПЕРЕД btn-success ===
+    // Создаём .plaan-middle-row для чекбокса + "Забыли пароль?"
+    var formButtons = form.querySelector('.login-form .form-buttons');
+    if (formButtons && remindBtn && submitBtn) {
+      // Создаём средний ряд
+      var middleRow = document.createElement('div');
+      middleRow.className = 'plaan-middle-row';
+
+      // Чекбокс согласия (слева)
+      var consent = document.createElement('label');
+      consent.className = 'plaan-consent';
+      consent.innerHTML =
+        '<input type="checkbox" checked>' +
+        '<span>Даю согласие на обработку персональных данных ' +
+        'в соответствии с <a href="https://web.plaan.ai/privacy" target="_blank">Политикой</a></span>';
+      middleRow.appendChild(consent);
+
+      // "Забыли пароль?" (справа)
+      middleRow.appendChild(remindBtn);
+
+      // Вставляем средний ряд перед кнопкой ВОЙТИ
+      formButtons.insertBefore(middleRow, submitBtn);
     }
 
-    // 4c. Карточка-подсказка ПОД формой
+    // === 4d. Создаём tooltip-карточку "Забыли пароль? Не проблема" ===
     var cardOuter = document.querySelector('.plaan-card-outer');
     if (cardOuter && !document.querySelector('.plaan-tooltip-card')) {
-      var tip = document.createElement('div');
-      tip.className = 'plaan-tooltip-card';
-      tip.innerHTML = '<div class="plaan-tooltip-header"><span class="plaan-tooltip-title">Забыли пароль? Не проблема</span><span class="plaan-info-icon" style="cursor:default">i</span></div>' +
+      var tooltip = document.createElement('div');
+      tooltip.className = 'plaan-tooltip-card';
+      tooltip.innerHTML =
+        '<div class="plaan-tooltip-header">' +
+        '<span class="plaan-tooltip-title">Забыли пароль? Не проблема</span>' +
+        '<span class="plaan-info-icon" style="cursor:default">i</span>' +
+        '</div>' +
         '<ol>' +
-          '<li>Нажмите кнопку «Забыли пароль?».</li>' +
-          '<li>Введите почту, которую указывали при записи на обучение.</li>' +
-          '<li>Подтвердите отправку — мы пришлём письмо с доступом.</li>' +
-          '<li>Откройте письмо и перейдите по ссылке.</li>' +
-          '<li>В личном кабинете зайдите в раздел «Профиль».</li>' +
-          '<li>Установите новый пароль — и вы снова в игре \uD83D\uDE80</li>' +
+        '<li>Нажмите кнопку «Восстановить пароль».</li>' +
+        '<li>Введите почту, которую указывали при записи на обучение.</li>' +
+        '<li>Подтвердите отправку — мы пришлём письмо с доступом.</li>' +
+        '<li>Откройте письмо и перейдите по ссылке.</li>' +
+        '<li>В личном кабинете зайдите в раздел «Профиль».</li>' +
+        '<li>Установите новый пароль — и вы снова в игре \uD83D\uDE80</li>' +
         '</ol>';
-      cardOuter.parentNode.insertBefore(tip, cardOuter.nextSibling);
+      cardOuter.parentNode.insertBefore(tooltip, cardOuter.nextSibling);
     }
 
-    // 5. Лейбл "Авторизация через"
-    document.querySelectorAll('.xdget-loginUserForm .xdget-socialUserFormField').forEach(function(s) {
-      if (s.querySelector('.plaan-social-label')) return;
-      var lbl = document.createElement('div');
-      lbl.className = 'plaan-social-label';
-      lbl.textContent = 'Авторизация через';
-      s.insertBefore(lbl, s.firstChild);
-    });
+    // === 5. Лейбл "Авторизация через" перед соцкнопками ===
+    form
+      .querySelectorAll('.xdget-socialUserFormField')
+      .forEach(function (social) {
+        if (social.querySelector('.plaan-social-label')) return;
+        var label = document.createElement('span');
+        label.className = 'plaan-social-label';
+        label.textContent = 'Авторизация через';
+        social.insertBefore(label, social.firstChild);
+      });
 
-    // 6. Footer
-    var formEl = document.querySelector('form.xdget-loginUserForm');
-    if (formEl && !formEl.querySelector('.plaan-footer')) {
-      var ft = document.createElement('div');
-      ft.className = 'plaan-footer';
-      ft.innerHTML = '<div class="plaan-footer-left">\u00A9\u0412\u0441\u0435 \u043f\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043d\u044b<br><br>\u041f\u043e \u0432\u0441\u0435\u043c \u0432\u043e\u043f\u0440\u043e\u0441\u0430\u043c \u043e\u0431\u0440\u0430\u0449\u0430\u0439\u0442\u0435\u0441\u044c<br>\u043f\u043e \u0444\u043e\u0440\u043c\u0435 <a href="/cms/system/contact">\u043e\u0431\u0440\u0430\u0442\u043d\u043e\u0439 \u0441\u0432\u044f\u0437\u0438</a></div><div class="plaan-footer-right"><a href="/oferta_neuro">\u0414\u043e\u0433\u043e\u0432\u043e\u0440 \u043e\u0444\u0435\u0440\u0442\u044b</a><br><a href="https://web.plaan.ai/privacy">\u041f\u043e\u043b\u0438\u0442\u0438\u043a\u0430 \u043a\u043e\u043d\u0444\u0438\u0434\u0435\u043d\u0446\u0438\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u0438</a></div>';
-      formEl.appendChild(ft);
+    // === 6. Footer внутри формы ===
+    if (!form.querySelector('.plaan-footer')) {
+      var footer = document.createElement('div');
+      footer.className = 'plaan-footer';
+      footer.innerHTML =
+        '<div class="plaan-footer-left">' +
+        '\u00A9 Все права защищены<br>' +
+        'По всем вопросам обращайтесь<br>' +
+        'по форме <a href="/cms/system/contact">обратной связи</a>' +
+        '</div>' +
+        '<div class="plaan-footer-right">' +
+        '<a href="/oferta_neuro">Договор оферты</a><br>' +
+        '<a href="https://web.plaan.ai/privacy">Политика конфиденциальности</a>' +
+        '</div>';
+      form.appendChild(footer);
     }
 
-    // 7. Скрыть обратную связь
-    var obs = document.getElementById('xdget124522_1');
-    if (obs) obs.style.display = 'none';
-    // Также ищем по содержимому
-    document.querySelectorAll('.area-PAGE > .xdget-html').forEach(function(el) {
-      if (el.textContent.trim().indexOf('Обратная связь') !== -1) {
-        el.style.display = 'none';
-      }
-    });
+    // === 7. Скрыть стандартный блок "Обратная связь" ===
+    document
+      .querySelectorAll(
+        '[id^="xdget124522"], .area-PAGE > .xdget-html'
+      )
+      .forEach(function (el) {
+        if (
+          el.id.indexOf('xdget124522') === 0 ||
+          el.textContent.trim().indexOf('Обратная связь') !== -1
+        ) {
+          el.style.display = 'none';
+        }
+      });
   }
 
+  // === Запуск: DOMContentLoaded + тройной setTimeout (ГК грузит виджеты асинхронно) ===
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(init, 300);
+      setTimeout(init, 800);
+      setTimeout(init, 2000);
+    });
   } else {
-    init();
+    setTimeout(init, 300);
+    setTimeout(init, 800);
+    setTimeout(init, 2000);
   }
-  setTimeout(init, 300);
-  setTimeout(init, 800);
-  setTimeout(init, 2000);
 })();
