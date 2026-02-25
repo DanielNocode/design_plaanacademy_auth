@@ -1,4 +1,4 @@
-/* ===== PLAAN LOGIN — CSS v8 (полный редизайн по спецификации README.md) ===== */
+/* ===== PLAAN LOGIN — CSS v9 (по полной Figma-спецификации) ===== */
 
 /* === СБРОС: скрываем системный чекбокс согласия ГК === */
 .global-confirm-checkbox-block,
@@ -11,19 +11,18 @@ input[name="pdpConfirmCheckbox"] {
   pointer-events: none !important;
 }
 
-/* === BODY: тёмный фон #060614 === */
+/* === BODY: Figma — background: #0A0A0A === */
 body,
 body.gc-user-guest {
-  background: #060614 !important;
-  font-family: 'Montserrat', sans-serif !important;
+  background: #0A0A0A !important;
+  font-family: 'Geologica', 'Montserrat', sans-serif !important;
   min-height: 100vh !important;
   overflow-x: hidden !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* === ФОН СЛОЙ 1: body::before — чёрный слева + BG-шейп справа === */
-/* Fix BG: cover вместо 70% auto — фон без разрывов до правого края */
+/* === ФОН СЛОЙ 1: body::before — тёмный слева + BG-шейп справа === */
 body::before,
 body.gc-user-guest::before {
   content: '' !important;
@@ -31,7 +30,7 @@ body.gc-user-guest::before {
   inset: 0 !important;
   z-index: 0 !important;
   background:
-    linear-gradient(to right, #060614 0%, #060614 30%, rgba(6,6,20,0.6) 50%, transparent 65%),
+    linear-gradient(to right, #0A0A0A 0%, #0A0A0A 30%, rgba(10,10,10,0.6) 50%, transparent 65%),
     url('https://fs.getcourse.ru/fileservice/file/download/a/677405/sc/407/h/b9cb4b96e9ccece4c40cfe582df64669.png') no-repeat right center / cover !important;
   pointer-events: none !important;
 }
@@ -63,8 +62,7 @@ body.gc-user-guest::after {
   padding: 40px 0 !important;
 }
 
-/* === ФОН СЛОЙ 2: gc-main-content::before — Хром-оверлей === */
-/* Fix BG: 75% auto вместо 60% auto — оверлей покрывает правую половину полностью */
+/* === ФОН СЛОЙ 2: Хром-оверлей — Figma: opacity 0.4, mix-blend-mode: screen === */
 .gc-main-content::before,
 .gc-both-main-content::before {
   content: '' !important;
@@ -72,7 +70,8 @@ body.gc-user-guest::after {
   inset: 0 !important;
   z-index: 1 !important;
   background: url('https://fs.getcourse.ru/fileservice/file/download/a/677405/sc/194/h/9b0a54ece636e23a3621b7ec98bd4473.png') no-repeat right center / 75% auto !important;
-  opacity: 0.7 !important;
+  opacity: 0.4 !important;
+  mix-blend-mode: screen !important;
   pointer-events: none !important;
 }
 
@@ -85,7 +84,7 @@ body.gc-user-guest::after {
   max-width: 100% !important;
 }
 
-/* Сброс Bootstrap .container max-width (ГК ставит container) */
+/* Сброс Bootstrap .container max-width */
 .container.main-page-container {
   max-width: 100% !important;
   width: 100% !important;
@@ -94,11 +93,11 @@ body.gc-user-guest::after {
   box-sizing: border-box !important;
 }
 
-/* === ЛОГОТИП: Plaan белый, по центру НАД карточкой (не экрана) === */
-/* Fix 6: max-width совпадает с карточкой, margin: 0 — выравнивание по левому краю карточки */
+/* === ЛОГОТИП: по центру над карточкой === */
+/* Figma: width 258px, height 55px */
 .gc-account-logo {
   text-align: center !important;
-  margin-bottom: 28px !important;
+  margin-bottom: 20px !important;
   z-index: 10 !important;
   position: relative !important;
   max-width: 560px !important;
@@ -107,10 +106,11 @@ body.gc-user-guest::after {
 }
 
 .gc-account-logo .logo-link img {
-  max-width: 200px !important;
-  height: auto !important;
+  max-width: 258px !important;
+  height: 55px !important;
   display: block !important;
   margin: 0 auto !important;
+  object-fit: contain !important;
 }
 
 /* === Скрываем ненужные элементы ГК === */
@@ -122,7 +122,7 @@ a.zk_log,
   display: none !important;
 }
 
-/* === XDGET ROOT: ширина контейнера виджета === */
+/* === XDGET ROOT === */
 .xdget-root {
   width: 100% !important;
   max-width: 560px !important;
@@ -137,9 +137,7 @@ a.zk_log,
   background: transparent !important;
 }
 
-/* === ОБЁРТКА .plaan-card-outer: градиентный бордер карточки === */
-/* Fix 5: margin: 0 (не auto) — карточка слева внутри padding контейнера */
-/* Fix 9: box-shadow для glow вместо z-index:-1 ::after */
+/* === ОБЁРТКА .plaan-card-outer: градиентный бордер === */
 .plaan-card-outer {
   position: relative !important;
   z-index: 10 !important;
@@ -153,19 +151,18 @@ a.zk_log,
   background: linear-gradient(
     135deg,
     rgba(74, 71, 254, 0.6) 0%,
-    rgba(74, 71, 254, 0.1) 25%,
+    rgba(74, 71, 254, 0.08) 25%,
     transparent 50%,
-    rgba(74, 71, 254, 0.1) 75%,
+    rgba(74, 71, 254, 0.08) 75%,
     rgba(74, 71, 254, 0.6) 100%
   ) !important;
-  /* Glow: фиолетовое свечение снизу + глубокая тень */
   box-shadow:
-    0 12px 40px -4px rgba(74, 71, 254, 0.35),
+    0 12px 40px -4px rgba(74, 71, 254, 0.3),
     0 30px 80px rgba(0, 0, 0, 0.5) !important;
   animation: plaan-fadeIn 0.5s ease-out !important;
 }
 
-/* === Glow-полоска под карточкой (дополнительно к box-shadow) === */
+/* Glow-полоска под карточкой */
 .plaan-card-outer::after {
   content: '' !important;
   position: absolute !important;
@@ -180,7 +177,7 @@ a.zk_log,
   pointer-events: none !important;
 }
 
-/* === ФОРМА-КАРТОЧКА: по Figma — #131314, R=25, padding 32px 36px === */
+/* === ФОРМА-КАРТОЧКА: Figma — #131314, R=25, padding 32px 36px, gap 24px === */
 form.xdget-loginUserForm.standard-form,
 form.xdget-loginUserForm {
   box-sizing: border-box !important;
@@ -190,20 +187,20 @@ form.xdget-loginUserForm {
   align-items: stretch !important;
   padding: 32px 36px !important;
   gap: 0px !important;
+  isolation: isolate !important;
   max-width: 100% !important;
   width: 100% !important;
   margin: 0 !important;
-  /* Figma: background #131314 + фиолетовые пятна в углах для blend с бордером */
+  /* Figma: #131314 + фиолетовые пятна в углах для blend с gradient бордером */
   background:
-    radial-gradient(ellipse at -5% -5%, rgba(74, 71, 254, 0.18) 0%, transparent 40%),
-    radial-gradient(ellipse at 105% 105%, rgba(74, 71, 254, 0.18) 0%, transparent 40%),
+    radial-gradient(ellipse at -5% -5%, rgba(74, 71, 254, 0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at 105% 105%, rgba(74, 71, 254, 0.2) 0%, transparent 40%),
     #131314 !important;
   border-radius: 25px !important;
   box-shadow: 0px 6px 38px rgba(10, 10, 10, 0.1) !important;
   position: relative !important;
   overflow: visible !important;
   border: none !important;
-  isolation: isolate !important;
 }
 
 form.xdget-loginUserForm.container-center {
@@ -217,26 +214,27 @@ form.xdget-loginUserForm::after {
   display: none !important;
 }
 
-/* === ЗАГОЛОВОК "Войти" — Unbounded 800, 36px === */
+/* === ЗАГОЛОВОК "Войти": Figma — Unbounded 400 40px === */
 .login-form .xdget-header,
 .register-form .xdget-header,
 .logined-form .xdget-header {
-  font-family: 'Unbounded', 'Montserrat', sans-serif !important;
-  font-size: 36px !important;
-  font-weight: 800 !important;
-  color: #ffffff !important;
+  font-family: 'Unbounded', sans-serif !important;
+  font-size: 40px !important;
+  font-weight: 400 !important;
+  color: #FFFFFF !important;
   margin: 0 0 24px 0 !important;
   display: inline-block !important;
-  line-height: 1.1 !important;
-  letter-spacing: -0.5px !important;
+  line-height: 50px !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
 }
 
-/* === ССЫЛКА "Регистрация" — справа, оранжевая === */
+/* === ССЫЛКА "Регистрация": Figma — Geologica 300 15px, color #FE9347 === */
 .login-form .btn-register {
-  font-family: 'Montserrat', sans-serif !important;
-  color: #f5a623 !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
+  font-family: 'Geologica', sans-serif !important;
+  color: #FE9347 !important;
+  font-size: 15px !important;
+  font-weight: 300 !important;
   text-decoration: none !important;
   padding: 14px 0 !important;
   border: none !important;
@@ -245,17 +243,18 @@ form.xdget-loginUserForm::after {
   cursor: pointer !important;
 }
 
-/* Префикс "Еще нет аккаунта?" перед Регистрация */
+/* Figma: "Еще нет аккаунта?" — Geologica 300 15px, #9D9D9D, opacity 0.7 */
 .login-form .btn-register::before {
   content: 'Еще нет аккаунта? ' !important;
-  color: rgba(255, 255, 255, 0.5) !important;
-  font-weight: 400 !important;
-  font-size: 13px !important;
+  color: #9D9D9D !important;
+  font-weight: 300 !important;
+  font-size: 15px !important;
+  opacity: 0.7 !important;
 }
 
-/* === ПОЛЯ ВВОДА: стили контейнеров === */
+/* === ПОЛЯ ВВОДА: контейнеры === */
 .xdget-loginUserForm .xdget-formField {
-  margin-bottom: 16px !important;
+  margin-bottom: 12px !important;
   position: relative !important;
   width: 100% !important;
   float: none !important;
@@ -272,19 +271,22 @@ form.xdget-loginUserForm::after {
 .xdget-loginUserForm .field-label {
   display: none !important;
 }
-
 .xdget-loginUserForm .field-description-block {
   display: none !important;
 }
 
+/* === FIELD-INPUT-BLOCK: Figma — внешний контейнер input'а === */
+/* Figma: 72px, rgba(255,255,255,0.04), R=10, padding 2px */
 .xdget-loginUserForm .field-input-block {
   width: 100% !important;
-  padding: 0 !important;
+  padding: 2px !important;
   position: relative !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-radius: 10px !important;
+  box-sizing: border-box !important;
 }
 
-/* === INPUT: тёмный фон, 56px высота, border-radius 14px === */
-/* Fix 2: min-height + height, усиленные селекторы для победы над ГК */
+/* === INPUT: Figma — #0A0A0A, border #2B2B2B, R=9, padding 22px 20px === */
 form.xdget-loginUserForm .xdget-formField .field-input-block input.form-control,
 form.xdget-loginUserForm .field-input-block input.form-control,
 .xdget-loginUserForm .field-input-block input.form-control,
@@ -293,16 +295,17 @@ form.xdget-loginUserForm input[type="text"],
 form.xdget-loginUserForm input[type="email"],
 form.xdget-loginUserForm input[type="password"] {
   width: 100% !important;
-  height: 56px !important;
-  min-height: 56px !important;
-  background: rgba(6, 6, 20, 0.9) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 14px !important;
-  color: #ffffff !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 15px !important;
-  font-weight: 400 !important;
-  padding: 0 20px 0 50px !important;
+  height: 68px !important;
+  min-height: 68px !important;
+  background: #0A0A0A !important;
+  border: 1px solid #2B2B2B !important;
+  border-radius: 9px !important;
+  color: #FFFFFF !important;
+  font-family: 'Geologica', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 200 !important;
+  /* left padding: 2px outer + icon 24px + gap */
+  padding: 22px 20px 22px 52px !important;
   box-sizing: border-box !important;
   outline: none !important;
   box-shadow: none !important;
@@ -313,38 +316,38 @@ form.xdget-loginUserForm input[type="password"] {
   margin: 0 !important;
 }
 
-/* Placeholder: полупрозрачный белый */
+/* Placeholder: Figma — Geologica 200, rgba(255,255,255,0.4) */
 .xdget-loginUserForm input.form-control::placeholder {
-  color: rgba(255, 255, 255, 0.35) !important;
-  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-weight: 200 !important;
   opacity: 1 !important;
 }
 
 /* Focus: фиолетовый бордер */
 .xdget-loginUserForm input.form-control:focus {
   border-color: rgba(74, 71, 254, 0.5) !important;
-  box-shadow: 0 0 0 3px rgba(74, 71, 254, 0.1) !important;
+  box-shadow: 0 0 0 2px rgba(74, 71, 254, 0.08) !important;
 }
 
-/* Chrome autofill fix: не ломаем тёмный фон */
+/* Chrome autofill fix */
 .xdget-loginUserForm input:-webkit-autofill,
 .xdget-loginUserForm input:-webkit-autofill:hover,
 .xdget-loginUserForm input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px rgba(6, 6, 20, 1) inset !important;
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  -webkit-box-shadow: 0 0 0 1000px #0A0A0A inset !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  caret-color: #FFFFFF !important;
+  border: 1px solid #2B2B2B !important;
   transition: background-color 5000s ease-in-out 0s !important;
 }
 
-/* === SVG-иконки в полях (вставляются JS) === */
+/* === SVG-иконки в полях: Figma — 24x24, цвет #4A47FE === */
 .plaan-field-icon {
   position: absolute !important;
   left: 16px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 20px !important;
-  height: 20px !important;
+  width: 24px !important;
+  height: 24px !important;
   z-index: 5 !important;
   pointer-events: none !important;
   display: flex !important;
@@ -352,8 +355,7 @@ form.xdget-loginUserForm input[type="password"] {
   justify-content: center !important;
 }
 
-/* === FORM BUTTONS: полный сброс float-row (ГК добавляет float-row динамически) === */
-/* Fix 3: кнопка ВОЙТИ на 100% ширины — убиваем все float и inline из ГК */
+/* === FORM BUTTONS: полный сброс float-row === */
 .xdget-row.form-buttons,
 .form-buttons.float-row,
 .form-buttons {
@@ -365,7 +367,6 @@ form.xdget-loginUserForm input[type="password"] {
   clear: both !important;
 }
 
-/* Все прямые потомки form-buttons — full-width block */
 .form-buttons > *,
 .form-buttons > div,
 .form-buttons > button,
@@ -384,12 +385,12 @@ form.xdget-loginUserForm input[type="password"] {
   display: flex !important;
 }
 
-/* Кнопка ВОЙТИ — принудительно block + 100% */
+/* Кнопка — принудительно block + 100% */
 .form-buttons .btn-success,
 .login-form .form-buttons .btn-success,
 .login-form .btn.btn-success {
   float: none !important;
-  display: block !important;
+  display: flex !important;
   width: 100% !important;
   max-width: 100% !important;
 }
@@ -398,71 +399,75 @@ form.xdget-loginUserForm input[type="password"] {
 .plaan-middle-row {
   display: flex !important;
   justify-content: space-between !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   width: 100% !important;
   margin-bottom: 20px !important;
+  gap: 8px !important;
 }
 
-/* === ЧЕКБОКС согласия (создаётся JS) === */
+/* === ЧЕКБОКС согласия: Figma — bg #FE9347, 20x20, R=4 === */
 .plaan-consent {
   display: flex !important;
   align-items: flex-start !important;
   gap: 10px !important;
   max-width: 60% !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Geologica', sans-serif !important;
   font-size: 12px !important;
-  font-weight: 400 !important;
-  color: rgba(255, 255, 255, 0.7) !important;
-  line-height: 1.5 !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
+  line-height: 15px !important;
   cursor: pointer !important;
 }
 
 .plaan-consent input[type="checkbox"] {
   -webkit-appearance: none !important;
   appearance: none !important;
-  width: 18px !important;
-  height: 18px !important;
-  min-width: 18px !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  border: 1px solid rgba(254, 147, 71, 0.12) !important;
   border-radius: 4px !important;
-  background: rgba(6, 6, 20, 0.9) !important;
+  background: #FE9347 !important;
   cursor: pointer !important;
   position: relative !important;
-  margin-top: 1px !important;
-}
-
-.plaan-consent input[type="checkbox"]:checked {
-  background: #22c55e !important;
-  border-color: #22c55e !important;
+  margin-top: 0 !important;
+  flex-shrink: 0 !important;
 }
 
 .plaan-consent input[type="checkbox"]:checked::after {
-  content: '✓' !important;
+  content: '' !important;
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  color: #fff !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
+  width: 10px !important;
+  height: 8px !important;
+  transform: translate(-50%, -55%) rotate(-45deg) !important;
+  border-left: 2px solid #FFFFFF !important;
+  border-bottom: 2px solid #FFFFFF !important;
+}
+
+.plaan-consent input[type="checkbox"]:not(:checked) {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .plaan-consent a {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: #FFFFFF !important;
   text-decoration: underline !important;
 }
 
-/* === КНОПКА "Забыли пароль?" + иконка ⓘ === */
+/* === "Забыли пароль?": Figma — Geologica 300 15px, underline, white === */
 .login-form .btn-remind {
-  color: #ffffff !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
+  color: #FFFFFF !important;
+  font-family: 'Geologica', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 300 !important;
+  text-decoration: underline !important;
   background: none !important;
   border: none !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 10px !important;
   width: auto !important;
   padding: 0 !important;
   cursor: pointer !important;
@@ -471,22 +476,22 @@ form.xdget-loginUserForm input[type="password"] {
 }
 
 .login-form .btn-remind:hover {
-  color: #f5a623 !important;
+  color: #FE9347 !important;
 }
 
-/* === Иконка ⓘ (info) — фиолетовая === */
+/* === Иконка ⓘ (info): Figma — background #FE9347, 24x24 === */
 .plaan-info-icon {
-  width: 22px !important;
-  height: 22px !important;
+  width: 24px !important;
+  height: 24px !important;
   border-radius: 50% !important;
-  border: 2px solid #4A47FE !important;
+  border: none !important;
   background: transparent !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
-  color: #4A47FE !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #FE9347 !important;
   cursor: pointer !important;
   flex-shrink: 0 !important;
   font-style: normal !important;
@@ -494,59 +499,60 @@ form.xdget-loginUserForm input[type="password"] {
 }
 
 .plaan-info-icon:hover {
-  background: rgba(74, 71, 254, 0.15) !important;
+  background: rgba(254, 147, 71, 0.12) !important;
 }
 
-/* === КНОПКА "ВОЙТИ »" — по Figma: radial gradient + inner shadows === */
-/* Figma: H=56, R=10, border=1px, bg=radial #FFBE8F→#FE9347, 6 inner shadows */
+/* === КНОПКА "ВОЙТИ »": полная Figma-спецификация === */
+/* Figma outer: 64px, rgba(254,147,71,0.08), R=14, padding 4px */
+/* Figma inner: 56px, radial-gradient #FFBE8F→#FE9347, R=10, Unbounded 500 15px */
 .login-form .btn-success,
 .register-form .btn-success,
 .login-form button.btn.btn-success,
 .register-form button.btn.btn-success,
 form.xdget-loginUserForm .login-form .btn-success,
 form.xdget-loginUserForm .register-form .btn-success {
-  display: block !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   width: 100% !important;
   height: 56px !important;
-  /* Border: 1px, radial gradient white → white 0% ≈ полупрозрачная белая рамка */
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border: none !important;
   border-radius: 10px !important;
-  /* Radial Gradient: #FFBE8F (светлый персик) → #FE9347 (насыщенный оранж) */
-  background: radial-gradient(ellipse at 50% 40%, #FFBE8F, #FE9347) !important;
-  background-image: radial-gradient(ellipse at 50% 40%, #FFBE8F, #FE9347) !important;
+  /* Figma: radial-gradient(50% 69.26% at 50% 50%, #FFBE8F 0%, #FE9347 100%) */
+  background: radial-gradient(50% 69.26% at 50% 50%, #FFBE8F 0%, #FE9347 100%) !important;
+  background-image: radial-gradient(50% 69.26% at 50% 50%, #FFBE8F 0%, #FE9347 100%) !important;
   background-color: #FE9347 !important;
-  color: #1a1a2e !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-weight: 800 !important;
-  font-size: 18px !important;
-  letter-spacing: 2px !important;
+  color: #0A0A0A !important;
+  /* Figma: Unbounded 500 15px uppercase */
+  font-family: 'Unbounded', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  letter-spacing: 0 !important;
   text-transform: uppercase !important;
   cursor: pointer !important;
   position: relative !important;
   overflow: hidden !important;
-  /* Figma inner shadows (Plus lighter ≈ screen → белые inset тени):
-     1) inset 0  8px 24px -16px white 24%  — верхний блик
-     2) inset 0 -24px 32px -16px white 22% — нижний блик
-     + внешние тени для глубины */
+  /* Figma exact box-shadow + outer glow ring (4px spread = outer wrapper) */
   box-shadow:
-    inset 0 8px 24px -16px rgba(255, 255, 255, 0.24),
-    inset 0 -24px 32px -16px rgba(255, 255, 255, 0.22),
-    inset 0 1px 1px rgba(255, 255, 255, 0.3),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.08),
-    0 6px 20px rgba(0, 0, 0, 0.45),
-    0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    0 0 0 4px rgba(254, 147, 71, 0.08),
+    0px 2px 4px -8px rgba(254, 147, 71, 0.08),
+    0px 8px 16px -8px rgba(254, 147, 71, 0.12),
+    0px 36px 32px -16px rgba(254, 147, 71, 0.06),
+    inset 0px 0px 12px rgba(255, 255, 255, 0.6),
+    inset 0px -24px 32px -16px rgba(255, 255, 255, 0.22),
+    inset 0px 8px 24px -16px rgba(255, 255, 255, 0.24) !important;
   transition: transform 0.15s ease, box-shadow 0.15s ease !important;
-  margin: 0 0 24px 0 !important;
-  /* Padding: top 20px, bottom 20px (Figma) */
-  padding: 0 20px !important;
+  margin: 0 0 12px 0 !important;
+  padding: 20px 0 !important;
   float: none !important;
   text-align: center !important;
-  line-height: 56px !important;
+  line-height: 19px !important;
+  gap: 10px !important;
   -webkit-appearance: none !important;
   appearance: none !important;
 }
 
-/* Глянцевый блик поверх кнопки — усиливает верхний inner shadow */
+/* Глянцевый блик поверх кнопки */
 .login-form .btn-success::before,
 .register-form .btn-success::before,
 .login-form button.btn.btn-success::before,
@@ -557,11 +563,10 @@ form.xdget-loginUserForm .register-form .btn-success {
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  height: 55% !important;
+  height: 50% !important;
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.04) 50%,
+    rgba(255, 255, 255, 0.12) 0%,
     transparent 100%
   ) !important;
   border-radius: 10px 10px 50% 50% !important;
@@ -569,31 +574,50 @@ form.xdget-loginUserForm .register-form .btn-success {
   z-index: 1 !important;
 }
 
-/* Hover: приподнимается */
+/* Figma: Light под кнопкой — rgba(254,147,71,0.46), blur 24px */
+.login-form .btn-success::after,
+.register-form .btn-success::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  bottom: -20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 258px !important;
+  height: 36px !important;
+  background: rgba(254, 147, 71, 0.46) !important;
+  filter: blur(24px) !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Hover */
 .login-form .btn-success:hover,
 .register-form .btn-success:hover {
   transform: translateY(-2px) !important;
   box-shadow:
-    inset 0 8px 24px -16px rgba(255, 255, 255, 0.28),
-    inset 0 -24px 32px -16px rgba(255, 255, 255, 0.26),
-    inset 0 1px 1px rgba(255, 255, 255, 0.35),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.08),
-    0 10px 28px rgba(0, 0, 0, 0.55),
-    0 4px 10px rgba(0, 0, 0, 0.35) !important;
+    0 0 0 4px rgba(254, 147, 71, 0.12),
+    0px 4px 8px -8px rgba(254, 147, 71, 0.12),
+    0px 12px 20px -8px rgba(254, 147, 71, 0.16),
+    0px 40px 36px -16px rgba(254, 147, 71, 0.08),
+    inset 0px 0px 12px rgba(255, 255, 255, 0.65),
+    inset 0px -24px 32px -16px rgba(255, 255, 255, 0.26),
+    inset 0px 8px 24px -16px rgba(255, 255, 255, 0.28) !important;
 }
 
-/* Active: вдавливается */
+/* Active */
 .login-form .btn-success:active,
 .register-form .btn-success:active {
   transform: translateY(1px) !important;
   box-shadow:
-    inset 0 8px 24px -16px rgba(255, 255, 255, 0.18),
-    inset 0 -24px 32px -16px rgba(255, 255, 255, 0.16),
-    inset 0 2px 6px rgba(0, 0, 0, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    0 0 0 4px rgba(254, 147, 71, 0.06),
+    inset 0px 0px 12px rgba(255, 255, 255, 0.4),
+    inset 0px 2px 6px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* === СОЦКНОПКИ: layout "Авторизация через [иконки]" === */
+/* === СОЦКНОПКИ: Figma — flex row space-between === */
+/* Figma: Geologica 300 15px, #FFFFFF */
 .login-form .xdget-socialUserFormField,
 .register-form .xdget-socialUserFormField {
   display: flex !important;
@@ -607,39 +631,37 @@ form.xdget-loginUserForm .register-form .btn-success {
   gap: 10px !important;
 }
 
-/* Лейбл "Авторизация через" */
+/* Лейбл "Авторизация через": Figma — Geologica 300 15px white */
 .plaan-social-label {
-  font-size: 13px !important;
-  color: rgba(255, 255, 255, 0.5) !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-weight: 500 !important;
+  font-size: 15px !important;
+  color: #FFFFFF !important;
+  font-family: 'Geologica', sans-serif !important;
+  font-weight: 300 !important;
   white-space: nowrap !important;
 }
 
-/* Контейнер соцкнопок — справа */
+/* Контейнер соцкнопок — gap: 4px */
 .xdget-socialUserFormField > div:last-child {
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 4px !important;
   margin-left: auto !important;
 }
 
-/* Скрываем стандартный лейбл соцкнопок ГК */
 .social-buttons-label {
   display: none !important;
 }
 
-/* Сброс pull-right на соцкнопках */
 .xdget-socialUserFormField.pull-right {
   float: none !important;
 }
 
 /* === РЕГИСТРАЦИЯ: кнопка "Вход" === */
 .register-form .btn-login {
-  font-family: 'Montserrat', sans-serif !important;
-  color: #f5a623 !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
+  font-family: 'Geologica', sans-serif !important;
+  color: #FE9347 !important;
+  font-size: 15px !important;
+  font-weight: 300 !important;
   background: transparent !important;
   border: none !important;
   float: right !important;
@@ -653,21 +675,21 @@ form.xdget-loginUserForm .register-form .btn-success {
   margin-bottom: 10px !important;
 }
 
-/* === АВТОРИЗОВАННЫЕ: тёмная тема === */
+/* === АВТОРИЗОВАННЫЕ === */
 .logined-form .html-content {
   color: rgba(255, 255, 255, 0.6) !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Geologica', sans-serif !important;
 }
 
 .logined-form .btn-enter,
 .logined-form .btn-primary {
-  background: linear-gradient(to bottom, #f5c96a 0%, #f0a830 35%, #e8922a 65%, #c06a18 100%) !important;
+  background: radial-gradient(50% 69.26% at 50% 50%, #FFBE8F 0%, #FE9347 100%) !important;
   border: none !important;
-  border-radius: 12px !important;
-  color: #1a1a1a !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-weight: 800 !important;
-  font-size: 16px !important;
+  border-radius: 10px !important;
+  color: #0A0A0A !important;
+  font-family: 'Unbounded', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
   padding: 16px 36px !important;
   position: relative !important;
   overflow: hidden !important;
@@ -681,46 +703,51 @@ form.xdget-loginUserForm .register-form .btn-success {
 }
 
 .logined-form .btn-logout:hover {
-  color: #f5a623 !important;
+  color: #FE9347 !important;
 }
 
-/* === FOOTER внутри формы === */
-/* Fix 7: flex space-between, правая часть строго справа */
+/* === FOOTER: Figma — Geologica 200 10px, divider, space-between === */
 .plaan-footer {
   display: flex !important;
   justify-content: space-between !important;
-  align-items: flex-start !important;
+  align-items: flex-end !important;
   width: 100% !important;
-  padding-top: 24px !important;
+  padding-top: 30px !important;
   margin-top: 24px !important;
   border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Geologica', sans-serif !important;
   position: relative !important;
   z-index: 3 !important;
-  gap: 20px !important;
+  gap: 30px !important;
   clear: both !important;
   float: none !important;
 }
 
 .plaan-footer-left {
-  font-size: 11px !important;
-  color: rgba(255, 255, 255, 0.25) !important;
-  line-height: 1.8 !important;
+  font-size: 10px !important;
+  font-weight: 200 !important;
+  color: #9D9D9D !important;
+  line-height: 12px !important;
   flex-shrink: 1 !important;
 }
 
 .plaan-footer-left a {
-  color: #f5a623 !important;
+  color: #9D9D9D !important;
   text-decoration: underline !important;
 }
 
 .plaan-footer-right {
   text-align: right !important;
-  font-size: 11px !important;
-  line-height: 1.8 !important;
+  font-size: 10px !important;
+  font-weight: 200 !important;
+  line-height: 12px !important;
   flex-shrink: 0 !important;
   margin-left: auto !important;
-  color: rgba(255, 255, 255, 0.25) !important;
+  color: #4A47FE !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 4px !important;
 }
 
 .plaan-footer-right a {
@@ -732,115 +759,107 @@ form.xdget-loginUserForm .register-form .btn-success {
   color: #6e6bff !important;
 }
 
-/* === СКРЫТЬ стандартный блок "Обратная связь" ГК === */
+/* === СКРЫТЬ "Обратная связь" === */
 #xdget124522_1_1_1_1_1_1,
 .area-PAGE > .xdget-html[style*="text-align"],
 .area-PAGE > .xdget-html[style*="padding-top"] {
   display: none !important;
 }
 
-/* === TOOLTIP-КАРТОЧКА "Забыли пароль? Не проблема" === */
+/* === TOOLTIP: Figma — #131314, R=20, padding 18px 36px === */
 .plaan-tooltip-card {
   display: none;
   max-width: 560px !important;
   width: 100% !important;
-  margin: 16px auto 0 !important;
-  padding: 28px 32px !important;
-  background:
-    radial-gradient(ellipse at 0% 0%, rgba(74, 71, 254, 0.15) 0%, transparent 40%),
-    radial-gradient(ellipse at 100% 100%, rgba(74, 71, 254, 0.15) 0%, transparent 40%),
-    rgba(10, 10, 26, 0.96) !important;
-  border: 1px solid rgba(74, 71, 254, 0.3) !important;
+  margin: 12px auto 0 !important;
+  padding: 18px 36px !important;
+  background: #131314 !important;
+  border: none !important;
   border-radius: 20px !important;
   position: relative !important;
   z-index: 10 !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Geologica', sans-serif !important;
   animation: plaan-fadeIn 0.3s ease-out !important;
 }
 
 .plaan-tooltip-card.active {
-  display: block !important;
-}
-
-/* Заголовок tooltip */
-.plaan-tooltip-header {
   display: flex !important;
-  align-items: center !important;
   justify-content: space-between !important;
-  margin-bottom: 16px !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
 }
 
+/* Figma: Geologica 500 18px */
+.plaan-tooltip-header {
+  display: none !important;
+}
+
+/* Figma: title Geologica 500 18px, directly in card */
 .plaan-tooltip-title {
-  font-family: 'Unbounded', 'Montserrat', sans-serif !important;
-  font-size: 22px !important;
-  font-weight: 700 !important;
-  color: #ffffff !important;
+  font-family: 'Geologica', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  color: #FFFFFF !important;
+  line-height: 22px !important;
 }
 
-/* Список tooltip */
+/* Figma: text Geologica 300 12px/20px, opacity 0.8 */
 .plaan-tooltip-card ol {
-  padding-left: 20px !important;
+  padding-left: 0 !important;
   margin: 0 !important;
-  font-size: 14px !important;
-  color: rgba(255, 255, 255, 0.7) !important;
-  line-height: 1.8 !important;
+  font-size: 12px !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
+  opacity: 0.8 !important;
+  line-height: 20px !important;
+  list-style: none !important;
 }
 
-/* Скрываем старый тултип если остался */
 .plaan-tooltip {
   display: none !important;
 }
 
-/* === LOGIN/REMIND BLOCK: тёмная тема === */
+/* === LOGIN/REMIND BLOCK === */
 form.xdget-loginUserForm .login-block,
 form.xdget-loginUserForm .remind-block {
   color: #fff !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Geologica', sans-serif !important;
 }
 
 form.xdget-loginUserForm .login-block input,
 form.xdget-loginUserForm .remind-block input {
-  background: rgba(6, 6, 20, 0.9) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 14px !important;
+  background: #0A0A0A !important;
+  border: 1px solid #2B2B2B !important;
+  border-radius: 9px !important;
   color: #fff !important;
   padding: 14px 18px !important;
 }
 
-/* === ОШИБКИ: красная тема === */
+/* === ОШИБКИ === */
 form.xdget-loginUserForm .alert-danger {
   background: rgba(220, 53, 69, 0.15) !important;
   border: 1px solid rgba(220, 53, 69, 0.4) !important;
   border-radius: 10px !important;
   color: #ff6b7a !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Geologica', sans-serif !important;
 }
 
-/* === Скрываем glow-дивы если остались от старых версий === */
+/* === Скрываем glow-дивы === */
 .plaan-glow-tl,
 .plaan-glow-br {
   display: none !important;
 }
 
-/* === АНИМАЦИЯ: fade-in === */
+/* === АНИМАЦИЯ === */
 @keyframes plaan-fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
 
-/* === > 1200px: всё по умолчанию (desktop) === */
-
-/* === ≤ 1200px: киборг уменьшен === */
 @media (max-width: 1200px) {
   body::after,
   body.gc-user-guest::after {
@@ -853,7 +872,6 @@ form.xdget-loginUserForm .alert-danger {
   }
 }
 
-/* === ≤ 992px: киборг почти невидим === */
 @media (max-width: 992px) {
   body::after,
   body.gc-user-guest::after {
@@ -872,18 +890,15 @@ form.xdget-loginUserForm .alert-danger {
   }
 }
 
-/* === ≤ 768px: мобильный layout, киборг скрыт === */
 @media (max-width: 768px) {
-  /* Скрываем киборг */
   body::after,
   body.gc-user-guest::after {
     display: none !important;
   }
 
-  /* Скрываем BG-шейп и оверлей */
   body::before,
   body.gc-user-guest::before {
-    background: #060614 !important;
+    background: #0A0A0A !important;
   }
 
   .gc-main-content::before,
@@ -902,14 +917,12 @@ form.xdget-loginUserForm .alert-danger {
     padding-right: 16px !important;
   }
 
-  /* Карточка: полная ширина, центр */
   .plaan-card-outer {
     max-width: 100% !important;
     margin: 0 auto !important;
     border-radius: 24px !important;
   }
 
-  /* Логотип: полная ширина */
   .gc-account-logo {
     max-width: 100% !important;
   }
@@ -920,106 +933,89 @@ form.xdget-loginUserForm .alert-danger {
     border-radius: 21px !important;
   }
 
-  /* Заголовок уменьшен */
   .login-form .xdget-header,
   .register-form .xdget-header {
     font-size: 32px !important;
+    line-height: 40px !important;
   }
 
-  /* Убираем "Еще нет аккаунта?" на мобиле */
   .login-form .btn-register::before {
     content: '' !important;
   }
 
-  /* Input чуть меньше */
   .xdget-loginUserForm .field-input-block input.form-control,
   .xdget-loginUserForm input.form-control {
     font-size: 14px !important;
-    height: 52px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 18px 16px 18px 46px !important;
   }
 
-  /* Кнопка чуть меньше */
   .login-form .btn-success,
   .register-form .btn-success {
-    font-size: 16px !important;
+    font-size: 14px !important;
     height: 50px !important;
-    line-height: 50px !important;
+    line-height: 18px !important;
   }
 
-  /* Средний ряд (забыли пароль + чекбокс): вертикально */
   .plaan-middle-row {
     flex-direction: column !important;
     align-items: center !important;
     gap: 12px !important;
   }
 
-  /* Чекбокс на всю ширину */
   .plaan-consent {
     max-width: 100% !important;
     justify-content: center !important;
   }
 
-  /* "Забыли пароль?" по центру */
   .login-form .btn-remind {
     font-size: 13px !important;
   }
 
-  /* Соцкнопки: строка, слева текст, справа иконки */
   .login-form .xdget-socialUserFormField,
   .register-form .xdget-socialUserFormField {
     flex-direction: row !important;
     align-items: center !important;
   }
 
-  /* Footer вертикально */
   .plaan-footer {
     flex-direction: column !important;
     gap: 12px !important;
     text-align: center !important;
+    align-items: center !important;
   }
 
   .plaan-footer-left,
   .plaan-footer-right {
     text-align: center !important;
     margin-left: 0 !important;
+    align-items: center !important;
   }
 
-  /* Tooltip на всю ширину */
   .plaan-tooltip-card {
     max-width: 100% !important;
+    padding: 16px 18px !important;
   }
 
   .plaan-tooltip-title {
-    font-size: 20px !important;
-  }
-
-  .plaan-tooltip-card ol {
-    font-size: 13px !important;
+    font-size: 16px !important;
   }
 }
 
-/* === ≤ 480px: маленький мобильный === */
 @media (max-width: 480px) {
-  .main-page-container {
+  .container.main-page-container {
     padding-left: 12px !important;
     padding-right: 12px !important;
   }
 
   form.xdget-loginUserForm.standard-form,
   form.xdget-loginUserForm {
-    padding: 20px 16px !important;
-    border-radius: 17px !important;
+    padding: 20px 14px !important;
+    border-radius: 18px !important;
   }
 
   .plaan-card-outer {
-    border-radius: 20px !important;
-  }
-
-  .plaan-tooltip-card {
-    padding: 20px 18px !important;
-  }
-
-  .plaan-tooltip-title {
-    font-size: 18px !important;
+    border-radius: 21px !important;
   }
 }
