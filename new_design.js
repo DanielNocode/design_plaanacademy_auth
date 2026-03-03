@@ -162,52 +162,58 @@
       cardOuter.parentNode.insertBefore(tooltip, cardOuter.nextSibling);
     }
 
-    // === 4e. Mobile: auto-show tooltip in remind-block above email ===
+    // === 4e. Mobile: show tooltip in remind-block above email on click ===
     var tooltipEl = document.querySelector('.plaan-tooltip-card');
-    if (tooltipEl) {
+    if (tooltipEl && remindBtn) {
       var _tOrigParent = tooltipEl.parentNode;
       var _tOrigNext = tooltipEl.nextSibling;
 
-      function placeTooltipForRemind() {
-        var isRemind = form.classList.contains('state-remind');
-        var isMobile = window.innerWidth <= 768;
-
-        if (isRemind && isMobile) {
-          var rb = form.querySelector('.remind-block');
-          if (rb && !rb.contains(tooltipEl)) {
-            // Find the first input field container in remind-block
-            var field = rb.querySelector('.form-field') ||
-                        rb.querySelector('.xdget-formField') ||
-                        rb.querySelector('.field-input-block') ||
-                        rb.querySelector('input');
-            if (field) {
-              // Walk up to direct child of remind-block
-              var insertTarget = field;
-              while (insertTarget.parentNode && insertTarget.parentNode !== rb) {
-                insertTarget = insertTarget.parentNode;
-              }
-              rb.insertBefore(tooltipEl, insertTarget);
-            } else {
-              rb.insertBefore(tooltipEl, rb.firstChild);
-            }
-            tooltipEl.classList.add('active');
-          } else if (!rb) {
-            // remind-block not yet in DOM, retry
-            setTimeout(placeTooltipForRemind, 200);
-          }
-        } else if (!isRemind && tooltipEl.parentNode !== _tOrigParent) {
-          // Restore tooltip to original position
+      function restoreTooltip() {
+        if (tooltipEl.parentNode !== _tOrigParent) {
           if (_tOrigNext && _tOrigNext.parentNode === _tOrigParent) {
             _tOrigParent.insertBefore(tooltipEl, _tOrigNext);
           } else if (_tOrigParent) {
             _tOrigParent.appendChild(tooltipEl);
           }
-          tooltipEl.classList.remove('active');
         }
+        tooltipEl.classList.remove('active');
       }
 
-      new MutationObserver(function () { placeTooltipForRemind(); })
-        .observe(form, { attributes: true, attributeFilter: ['class'] });
+      // Click on "Забыли пароль?" → move tooltip into remind-block
+      remindBtn.addEventListener('click', function () {
+        if (window.innerWidth > 768) return;
+        var attempts = 0;
+        (function tryMove() {
+          var rb = form.querySelector('.remind-block');
+          if (rb) {
+            if (!rb.contains(tooltipEl)) {
+              var field = rb.querySelector('.form-field') ||
+                          rb.querySelector('.xdget-formField') ||
+                          rb.querySelector('.field-input-block') ||
+                          rb.querySelector('input');
+              if (field) {
+                var target = field;
+                while (target.parentNode && target.parentNode !== rb) {
+                  target = target.parentNode;
+                }
+                rb.insertBefore(tooltipEl, target);
+              } else {
+                rb.insertBefore(tooltipEl, rb.firstChild);
+              }
+              tooltipEl.classList.add('active');
+            }
+            // Listen for "Вернуться" / back button to restore tooltip
+            var backBtn = rb.querySelector('.btn-link, .btn-back');
+            if (backBtn) {
+              backBtn.addEventListener('click', function () {
+                setTimeout(restoreTooltip, 300);
+              }, { once: true });
+            }
+          } else if (++attempts < 10) {
+            setTimeout(tryMove, 300);
+          }
+        })();
+      });
     }
 
     // === 5. Лейбл "Авторизация через" ===
