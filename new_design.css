@@ -826,6 +826,13 @@ form.xdget-loginUserForm .remind-block {
   font-family: 'Geologica', sans-serif !important;
 }
 
+/* Hide default "Забыли пароль?" header in remind-block */
+form.xdget-loginUserForm .remind-block > h2,
+form.xdget-loginUserForm .remind-block > .xdget-header,
+form.xdget-loginUserForm .remind-block > h3 {
+  display: none !important;
+}
+
 form.xdget-loginUserForm .login-block input,
 form.xdget-loginUserForm .remind-block input {
   background: #0A0A0A !important;
