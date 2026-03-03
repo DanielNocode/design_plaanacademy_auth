@@ -804,7 +804,7 @@ form.xdget-loginUserForm .register-form .btn-success {
 }
 
 /* Figma: text Geologica 300 12px/20px, opacity 0.8 */
-.plaan-tooltip-card ol {
+.plaan-tooltip-card ol.plaan-tooltip-steps {
   padding-left: 0 !important;
   margin: 0 !important;
   font-size: 12px !important;
@@ -813,6 +813,15 @@ form.xdget-loginUserForm .register-form .btn-success {
   opacity: 0.8 !important;
   line-height: 20px !important;
   list-style: none !important;
+  counter-reset: steps !important;
+}
+
+.plaan-tooltip-card ol.plaan-tooltip-steps li {
+  counter-increment: steps !important;
+}
+
+.plaan-tooltip-card ol.plaan-tooltip-steps li::before {
+  content: counter(steps) ". " !important;
 }
 
 .plaan-tooltip {
@@ -1135,5 +1144,11 @@ form.xdget-loginUserForm .alert-danger {
     max-width: 100% !important;
     padding: 18px 16px !important;
     border-radius: 16px !important;
+  }
+
+  /* --- Mobile: hide step 1 "Нажмите кнопку Восстановить пароль" and renumber --- */
+  .plaan-tooltip-card ol.plaan-tooltip-steps li.plaan-step-desktop-only {
+    display: none !important;
+    counter-increment: none !important;
   }
 }

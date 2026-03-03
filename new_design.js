@@ -148,13 +148,14 @@
       tooltip.innerHTML =
         '<div style="display:flex;flex-direction:column;gap:10px;flex:1">' +
         '<span class="plaan-tooltip-title">Забыли пароль? Не проблема</span>' +
-        '<div style="font-size:12px;font-weight:300;color:#FFFFFF;opacity:0.8;line-height:20px">' +
-        '1. Введите почту, которую указывали при записи на обучение.<br>' +
-        '2. Подтвердите отправку — мы пришлём письмо с доступом.<br>' +
-        '3. Откройте письмо и перейдите по ссылке.<br>' +
-        '4. В личном кабинете зайдите в раздел «Профиль».<br>' +
-        '5. Установите новый пароль — и вы снова в игре \uD83D\uDE80' +
-        '</div></div>' +
+        '<ol class="plaan-tooltip-steps">' +
+        '<li class="plaan-step-desktop-only">Нажмите кнопку «Восстановить пароль».</li>' +
+        '<li>Введите почту, которую указывали при записи на обучение.</li>' +
+        '<li>Подтвердите отправку — мы пришлём письмо с доступом.</li>' +
+        '<li>Откройте письмо и перейдите по ссылке.</li>' +
+        '<li>В личном кабинете зайдите в раздел «Профиль».</li>' +
+        '<li>Установите новый пароль — и вы снова в игре \uD83D\uDE80</li>' +
+        '</ol></div>' +
         '<span class="plaan-info-icon" style="cursor:default;flex-shrink:0">' +
         '<svg width="24" height="24" viewBox="0 0 24 24" fill="#FE9347"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>' +
         '</span>';
