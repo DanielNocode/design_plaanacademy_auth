@@ -162,6 +162,54 @@
       cardOuter.parentNode.insertBefore(tooltip, cardOuter.nextSibling);
     }
 
+    // === 4e. Mobile: auto-show tooltip in remind-block above email ===
+    var tooltipEl = document.querySelector('.plaan-tooltip-card');
+    if (tooltipEl) {
+      var _tOrigParent = tooltipEl.parentNode;
+      var _tOrigNext = tooltipEl.nextSibling;
+
+      function placeTooltipForRemind() {
+        var isRemind = form.classList.contains('state-remind');
+        var isMobile = window.innerWidth <= 768;
+
+        if (isRemind && isMobile) {
+          var rb = form.querySelector('.remind-block');
+          if (rb && !rb.contains(tooltipEl)) {
+            // Find the first input field container in remind-block
+            var field = rb.querySelector('.form-field') ||
+                        rb.querySelector('.xdget-formField') ||
+                        rb.querySelector('.field-input-block') ||
+                        rb.querySelector('input');
+            if (field) {
+              // Walk up to direct child of remind-block
+              var insertTarget = field;
+              while (insertTarget.parentNode && insertTarget.parentNode !== rb) {
+                insertTarget = insertTarget.parentNode;
+              }
+              rb.insertBefore(tooltipEl, insertTarget);
+            } else {
+              rb.insertBefore(tooltipEl, rb.firstChild);
+            }
+            tooltipEl.classList.add('active');
+          } else if (!rb) {
+            // remind-block not yet in DOM, retry
+            setTimeout(placeTooltipForRemind, 200);
+          }
+        } else if (!isRemind && tooltipEl.parentNode !== _tOrigParent) {
+          // Restore tooltip to original position
+          if (_tOrigNext && _tOrigNext.parentNode === _tOrigParent) {
+            _tOrigParent.insertBefore(tooltipEl, _tOrigNext);
+          } else if (_tOrigParent) {
+            _tOrigParent.appendChild(tooltipEl);
+          }
+          tooltipEl.classList.remove('active');
+        }
+      }
+
+      new MutationObserver(function () { placeTooltipForRemind(); })
+        .observe(form, { attributes: true, attributeFilter: ['class'] });
+    }
+
     // === 5. Лейбл "Авторизация через" ===
     form.querySelectorAll('.xdget-socialUserFormField').forEach(function (social) {
       if (social.querySelector('.plaan-social-label')) return;
